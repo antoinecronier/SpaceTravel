@@ -10,6 +10,7 @@ public class Spaceship {
 	private List<Compartment> compartments = new ArrayList<Compartment>();
 	private int fuel;
 	private int maxFuel;
+	private int maxWeight;
 
 	/**
 	 * @return the name
@@ -75,6 +76,19 @@ public class Spaceship {
 		this.maxFuel = maxFuel;
 	}
 
+	/**
+	 * @return the maxWeight
+	 */
+	public int getMaxWeight() {
+		return maxWeight;
+	}
+	/**
+	 * @param maxWeight the maxWeight to set
+	 */
+	public void setMaxWeight(int maxWeight) {
+		this.maxWeight = maxWeight;
+	}
+
 	public Spaceship() {
 
 	}
@@ -86,12 +100,13 @@ public class Spaceship {
 	 * @param fuel
 	 */
 	public Spaceship(String name, List<Cosmonaut> cosmonauts,
-			List<Compartment> compartments, int fuel,int maxFuel) {
+			List<Compartment> compartments, int fuel,int maxFuel, int maxWeight) {
 		super();
 		this.name = name;
 		this.cosmonauts = cosmonauts;
 		this.compartments = compartments;
 		this.fuel = fuel;
 		this.maxFuel = maxFuel;
+		this.maxWeight = maxWeight;
 	}
 }

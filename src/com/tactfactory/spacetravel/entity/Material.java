@@ -1,8 +1,9 @@
 package com.tactfactory.spacetravel.entity;
 
-public class Material extends Gear {
+public class Material extends Gear implements BuySale {
 
 	private int rarity;
+	private double price;
 
 	/**
 	 * @return the rarity
@@ -16,6 +17,20 @@ public class Material extends Gear {
 	 */
 	public void setRarity(int rarity) {
 		this.rarity = rarity;
+	}
+
+	/**
+	 * @return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
+
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	/**
@@ -36,8 +51,18 @@ public class Material extends Gear {
 	/**
 	 * @param rarity
 	 */
-	public Material(String name, int weight, int rarity) {
+	public Material(String name, int weight, int rarity, double price) {
 		super(name, weight);
 		this.rarity = rarity;
+		this.price = price;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Material [rarity=" + rarity + ", price=" + price
+				+ ", toString()=" + super.toString() + "]";
 	}
 }

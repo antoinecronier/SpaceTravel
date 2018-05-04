@@ -71,4 +71,13 @@ public class Passenger extends Gear {
 		this.lastname = lastname;
 		this.birth = birth;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Passenger [firstname=" + firstname + ", lastname=" + lastname
+				+ ", birth=" + birth + ", toString()=" + super.toString() + "]";
+	}
 }

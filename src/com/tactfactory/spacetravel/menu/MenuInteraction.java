@@ -19,6 +19,7 @@ public class MenuInteraction {
     public static final String MENU_CONTINUE = "\nEntrer pour continuer...\n";
     public static final String MENU_DELIMITERS = "-----------------------";
     public static final String ACTION_LEAVE = "exit : quitter le menu";
+    public static final String ACTION_LEAVE_ITEM = "exit";
 
     private Scanner scanner = new Scanner(System.in);
 

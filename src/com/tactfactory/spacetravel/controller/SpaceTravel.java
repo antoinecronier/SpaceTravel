@@ -7,6 +7,7 @@ import com.tactfactory.spacetravel.entity.Compartment;
 import com.tactfactory.spacetravel.entity.Gear;
 import com.tactfactory.spacetravel.entity.Planet;
 import com.tactfactory.spacetravel.entity.Spaceship;
+import com.tactfactory.spacetravel.entity.Weightable;
 import com.tactfactory.spacetravel.util.PlanetUtil;
 
 public class SpaceTravel {
@@ -25,6 +26,8 @@ public class SpaceTravel {
 	private static final String NAVIGATION_STOP = "Le vaisseau a fini son trajet";
 	private static final String UNLOAD_GEAR = "Déchargement de %s";
 	private static final String UNLOAD_GEAR_FAILED = "Impossible de décharger %s car non présent";
+	private static final String SPACESHIP_OVERWEIGHT = "Impossible de déplacer le vaisseau car il est surchargé";
+	private static final String COMPARTMENT_OVERWEIGHT = "Compartiment surchargé";
 
 	private Spaceship spaceship;
 	private List<Planet> travelSteps;
@@ -80,16 +83,11 @@ public class SpaceTravel {
 
 	public void travelToNextPlanet(){
 		if (this.stepIndex < this.travelSteps.size() - 1) {
-			if (this.stepIndex >= 0) {
-				int necessaryFuel = PlanetUtil.fuelForDistance(travelSteps.get(stepIndex), travelSteps.get(stepIndex+1));
-				this.spaceship.setFuel(this.spaceship.getFuel()-necessaryFuel);
-				if (this.spaceship.getFuel() > 0) {
-					System.out.println(String.format(NAVIGATION_STEP,this.spaceship.getName(),travelSteps.get(stepIndex+1).getName(), travelSteps.get(stepIndex).getName(), String.valueOf(necessaryFuel)));
-					this.stepIndex++;
-				}else {
-					System.out.println(NAVIGATION_FAILED);
-					this.stepIndex = -1;
-					this.canContinue = false;
+			if (this.canContinue) {
+				if (checkWeight()) {
+					if (checkFuel()) {
+
+					}
 				}
 			}else {
 				System.out.println(NAVIGATION_FAILED);
@@ -97,6 +95,55 @@ public class SpaceTravel {
 		}else {
 			System.out.println(NAVIGATION_STOP);
 		}
+	}
+
+	private Boolean checkWeight() {
+		Boolean result = false;
+
+		if (this.spaceship.getMaxWeight() > this.getSpaceShipRealWeight()) {
+			result = true;
+		}else {
+			this.canContinue = false;
+			System.out.println(SPACESHIP_OVERWEIGHT);
+		}
+
+		return result;
+	}
+
+	/**
+	 * Fuel is not checked.
+	 * @return
+	 */
+	public int getSpaceShipRealWeight(){
+		int result = 0;
+		List<Weightable> weightables = new ArrayList<Weightable>();
+		weightables.addAll(this.spaceship.getCosmonauts());
+		weightables.addAll(this.spaceship.getCompartments());
+
+		for (Weightable weightable : weightables) {
+			result += weightable.getWeight();
+		}
+		return result;
+	}
+
+	/**
+	 * @param necessaryFuel
+	 */
+	private Boolean checkFuel() {
+		Boolean result = false;
+		int necessaryFuel = PlanetUtil.fuelForDistance(travelSteps.get(stepIndex), travelSteps.get(stepIndex+1));
+		this.spaceship.setFuel(this.spaceship.getFuel()-necessaryFuel);
+		if (this.spaceship.getFuel() > 0) {
+			System.out.println(String.format(NAVIGATION_STEP,this.spaceship.getName(),travelSteps.get(stepIndex+1).getName(), travelSteps.get(stepIndex).getName(), String.valueOf(necessaryFuel)));
+			result = true;
+			this.stepIndex++;
+		}else {
+			System.out.println(NAVIGATION_FAILED);
+			this.stepIndex = -1;
+			this.canContinue = false;
+		}
+
+		return result;
 	}
 
 	public void reFuel(){
@@ -116,47 +163,60 @@ public class SpaceTravel {
 		}
 	}
 
-	public void load(List<Gear> gears, Compartment compartment){
+	public List<Gear> load(List<Gear> gears, Compartment compartment){
+		List<Gear> notLoad = new ArrayList<Gear>();
 		for (Gear gear : gears) {
-			if (compartment.getCriteria() == null) {
-				if (compartment.getGears().isEmpty()) {
-					compartment.getGears().add(gear);
-					System.out.println(String.format(GEAR_ADD,gear.getName(),compartment.getName()));
-				}else if (compartment.getGears().get(0).getClass().getSimpleName().equals(gear.getClass().getSimpleName())) {
-					compartment.getGears().add(gear);
-					System.out.println(String.format(GEAR_ADD,gear.getName(),compartment.getName()));
+			if (compartment.getWeight() + gear.getWeight() < compartment.getMaximalWeight()) {
+				if (compartment.getCriteria() == null) {
+					if (compartment.getGears().isEmpty()) {
+						compartment.getGears().add(gear);
+						System.out.println(String.format(GEAR_ADD,gear.getName(),compartment.getName()));
+					}else if (compartment.getGears().get(0).getClass().getSimpleName().equals(gear.getClass().getSimpleName())) {
+						compartment.getGears().add(gear);
+						System.out.println(String.format(GEAR_ADD,gear.getName(),compartment.getName()));
+					}else {
+						System.out.println(String.format(GEAR_NOT_ADDED, gear.getName(), compartment.getName()));
+						notLoad.add(gear);
+					}
 				}else {
-					System.out.println(String.format(GEAR_NOT_ADDED, gear.getName(), compartment.getName()));
+					if (gear.getClass().getSimpleName().equals(compartment.getCriteria())) {
+						compartment.getGears().add(gear);
+						System.out.println(String.format(GEAR_ADD,gear.getName(),compartment.getName()));
+					}else {
+						System.out.println(String.format(GEAR_NOT_ADDED, gear.getName(), compartment.getName() + String.format(WRONG_COMPARTMENT, compartment.getCriteria())));
+						notLoad.add(gear);
+					}
 				}
 			}else {
-				if (gear.getClass().getSimpleName().equals(compartment.getCriteria())) {
-					compartment.getGears().add(gear);
-					System.out.println(String.format(GEAR_ADD,gear.getName(),compartment.getName()));
-				}else {
-					System.out.println(String.format(GEAR_NOT_ADDED, gear.getName(), compartment.getName() + String.format(WRONG_COMPARTMENT, compartment.getCriteria())));
-				}
+				System.out.println(COMPARTMENT_OVERWEIGHT);
 			}
 		}
+		return notLoad;
 	}
 
-	public void unload(Compartment compartment) {
+	public List<Gear> unload(Compartment compartment) {
 		List<Gear> gears = new ArrayList<Gear>();
 		for (Gear gear : compartment.getGears()) {
 			gears.add(gear);
 			System.out.println(String.format(UNLOAD_GEAR, gear.getName()));
 		}
 		compartment.getGears().removeAll(gears);
+		return gears;
 	}
 
-	public void unload(Compartment compartment, List<Gear> gears) {
+	public List<Gear> unload(Compartment compartment, List<Gear> gears) {
+		List<Gear> notUnload = new ArrayList<Gear>();
 		for (Gear gear : gears) {
 			if (compartment.getGears().contains(gear)) {
 				System.out.println(String.format(UNLOAD_GEAR, gear.getName()));
+				compartment.getGears().remove(gear);
 			}else {
 				System.out.println(String.format(UNLOAD_GEAR_FAILED,gear.getName()));
+				notUnload.add(gear);
 			}
 		}
-		compartment.getGears().removeAll(gears);
+
+		return notUnload;
 	}
 
 	public Planet getCurrentPlanet(){

@@ -1,9 +1,10 @@
 package com.tactfactory.spacetravel.entity;
 
-public class Cosmonaut {
+public class Cosmonaut implements Weightable {
 
 	private String firstname;
 	private String lastname;
+	private int weight;
 
 	/**
 	 * @return the firstname
@@ -30,6 +31,19 @@ public class Cosmonaut {
 		this.lastname = lastname;
 	}
 
+	/**
+	 * @return the weight
+	 */
+	public int getWeight() {
+		return weight;
+	}
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	public Cosmonaut() {
 	}
 
@@ -37,10 +51,11 @@ public class Cosmonaut {
 	 * @param firstname
 	 * @param lastname
 	 */
-	public Cosmonaut(String firstname, String lastname) {
+	public Cosmonaut(String firstname, String lastname, int weight) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.weight = weight;
 	}
 
 	/* (non-Javadoc)

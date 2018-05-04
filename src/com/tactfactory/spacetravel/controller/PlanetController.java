@@ -39,7 +39,8 @@ public class PlanetController implements Menu {
 	@Override
 	public Boolean checkResult(String toCheck) {
 		Boolean result = false;
-		if (toCheck.equals("1") || toCheck.equals("2") || toCheck.equals("3")) {
+		if (toCheck.equals("1") || toCheck.equals("2") || toCheck.equals("3")
+				|| toCheck.equals(MenuInteraction.ACTION_LEAVE_ITEM)) {
 			result = true;
 		}
 		return result;
@@ -60,10 +61,13 @@ public class PlanetController implements Menu {
 			MenuInteraction.getInstance().menuInteract(this);
 			break;
 		case "2":
+			this.spaceTravel.getTravelSteps().add(this.planet);
+			this.spaceTravel.travelToNextPlanet();
 			MenuInteraction.getInstance().menuContinue();
 			MenuInteraction.getInstance().menuInteract(this);
 			break;
 		case "3":
+			//TODO : after spaceport created
 			MenuInteraction.getInstance().menuContinue();
 			MenuInteraction.getInstance().menuInteract(this);
 			break;

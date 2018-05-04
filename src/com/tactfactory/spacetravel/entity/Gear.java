@@ -42,4 +42,12 @@ public abstract class Gear {
 		this.name = name;
 		this.weight = weight;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Gear [name=" + name + ", weight=" + weight + "]";
+	}
 }

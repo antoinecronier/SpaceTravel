@@ -3,12 +3,13 @@ package com.tactfactory.spacetravel.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Compartment {
+public class Compartment implements Weightable {
 
 	private String name;
 	private List<Gear> gears = new ArrayList<Gear>();
 	private int maximalWeight;
 	private String criteria;
+	private int emptyWeight;
 
 	/**
 	 * @return the name
@@ -59,6 +60,19 @@ public class Compartment {
 		this.criteria = criteria;
 	}
 
+	/**
+	 * @return the emptyWeight
+	 */
+	public int getEmptyWeight() {
+		return emptyWeight;
+	}
+	/**
+	 * @param emptyWeight the emptyWeight to set
+	 */
+	public void setEmptyWeight(int emptyWeight) {
+		this.emptyWeight = emptyWeight;
+	}
+
 	public Compartment() {
 
 	}
@@ -70,11 +84,31 @@ public class Compartment {
 	 * @param criteria
 	 */
 	public Compartment(String name, List<Gear> gears, int maximalWeight,
-			String criteria) {
+			String criteria, int emptyWeight) {
 		super();
 		this.name = name;
 		this.gears = gears;
 		this.maximalWeight = maximalWeight;
 		this.criteria = criteria;
+		this.emptyWeight = emptyWeight;
+	}
+
+	@Override
+	public int getWeight() {
+		Integer realWeight = this.emptyWeight;
+		for (Gear gear : this.gears) {
+			realWeight += gear.getWeight();
+		}
+		return  realWeight;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Compartment [name=" + name + ", gears=" + gears
+				+ ", maximalWeight=" + maximalWeight + ", criteria=" + criteria
+				+ ", emptyWeight=" + emptyWeight + "]";
 	}
 }

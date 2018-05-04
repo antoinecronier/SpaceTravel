@@ -1,8 +1,9 @@
 package com.tactfactory.spacetravel.entity;
 
-public class Food extends Gear {
+public class Food extends Gear implements BuySale {
 
 	private Boolean isEatable;
+	private double price;
 
 	/**
 	 * @return the isEatable
@@ -16,6 +17,20 @@ public class Food extends Gear {
 	 */
 	public void setIsEatable(Boolean isEatable) {
 		this.isEatable = isEatable;
+	}
+
+	/**
+	 * @return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
+
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	/**
@@ -36,8 +51,18 @@ public class Food extends Gear {
 	/**
 	 * @param isEatable
 	 */
-	public Food(String name, int weight, Boolean isEatable) {
+	public Food(String name, int weight, Boolean isEatable, double price) {
 		super(name, weight);
 		this.isEatable = isEatable;
+		this.price = price;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Food [isEatable=" + isEatable + ", price=" + price
+				+ ", toString()=" + super.toString() + "]";
 	}
 }
