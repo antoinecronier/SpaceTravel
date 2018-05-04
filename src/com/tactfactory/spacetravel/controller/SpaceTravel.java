@@ -32,6 +32,34 @@ public class SpaceTravel {
 	private boolean canContinue = true;
 
 	/**
+	 * @return the spaceship
+	 */
+	public Spaceship getSpaceship() {
+		return spaceship;
+	}
+
+	/**
+	 * @param spaceship the spaceship to set
+	 */
+	public void setSpaceship(Spaceship spaceship) {
+		this.spaceship = spaceship;
+	}
+
+	/**
+	 * @return the travelSteps
+	 */
+	public List<Planet> getTravelSteps() {
+		return travelSteps;
+	}
+
+	/**
+	 * @param travelSteps the travelSteps to set
+	 */
+	public void setTravelSteps(List<Planet> travelSteps) {
+		this.travelSteps = travelSteps;
+	}
+
+	/**
 	 * @param spaceship
 	 * @param travelSteps
 	 */
@@ -129,5 +157,9 @@ public class SpaceTravel {
 			}
 		}
 		compartment.getGears().removeAll(gears);
+	}
+
+	public Planet getCurrentPlanet(){
+		return this.travelSteps.get(this.stepIndex);
 	}
 }

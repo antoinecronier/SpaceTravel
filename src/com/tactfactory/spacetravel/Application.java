@@ -3,8 +3,10 @@ package com.tactfactory.spacetravel;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tactfactory.spacetravel.controller.PlanetController;
 import com.tactfactory.spacetravel.controller.SpaceTravel;
 import com.tactfactory.spacetravel.entity.*;
+import com.tactfactory.spacetravel.menu.MenuInteraction;
 
 public class Application {
 
@@ -78,6 +80,10 @@ public class Application {
 
 		// Re fuel to max
 		spaceship1Travel.reFuel();
+
+		// Manualy do
+		String result = MenuInteraction.getInstance().menuInteract(new PlanetController(earth,spaceship1Travel));
+
 
 		// Travel by steps for spaceship1
 		System.out.println("\n\n\n-------------\nVoyage 1 étape 1\n-------------\n");
