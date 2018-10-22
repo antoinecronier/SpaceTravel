@@ -8,6 +8,47 @@ import com.tactfactory.spacetravel.controller.SpaceTravel;
 import com.tactfactory.spacetravel.entity.*;
 import com.tactfactory.spacetravel.menu.MenuInteraction;
 
+/**
+ * Créer un programme qui permet de faire voyager un vaisseau spacial de planète en planète suivant un itinéraire de vol.
+ * Le vaisseau possèdera des compartiments de stockage ne pouvant embarquer qu'un certain poids de marchandise et un seul type de marchandise.
+ * Afin d'affréter un compartiment on renseignera la liste des marchandises et le compartiment dans lequel on veut insérer les marchandises.
+ * Lorsque l'on affréte un compartiement on le rempli jusqu'à ne plus pouvoir y ajouter de marchandise en terme de poids.
+ * Un planète possèdera un nom et des coordonnées.
+ * Une coordonnées sera représenté par X, Y et Z
+ * Naviguer entre deux planètes se fera en consommant du carburant selon la formule suivante :
+ * 		((sqrt((Xa-Xb)²+(Ya-Yb)²+(Za-Zb)²)/100) * (poidsFusée / 100))
+ * 
+ * Une marchandise, un compartiment et les cosmonautes qui pilote la fusée possède tous un poids. 
+ * 
+ * Votre programme permettra à l'utilisateur par l'intermédiaire d'un menu de :
+ * 	- connaitre les informations de la planète courante ou il se situe
+ * 	- naviguer vers une nouvelle planète
+ * 
+ * => exemples :
+ * 		-----------------------Bienvenu sur la planet-----------------------
+ *
+ *		Planet [name=Terre, coordinate=Coordinate [X=0.0, Y=12.0, Z=-20.0]]
+ * 
+ * 		1 : Données de navigation
+ *		2 : Naviguer vers la planète
+ *
+ * => si l'utilisateur saisi 1 on affichera :
+ * 
+ * 		La planète Planet [name=Terre, coordinate=Coordinate [X=0.0, Y=12.0, Z=-20.0]] est à 0 unité de carburant de la plan�te actuelle Planet [name=Terre, coordinate=Coordinate [X=0.0, Y=12.0, Z=-20.0]]
+ *		Actuellement le vaisseau a 10000 unité de carburant
+ *
+ *		Entrer pour continuer...
+ *
+ * => si l'utilisateur saisi 2 on affichera :
+ * 
+ * 		Le vaisseau spacial Fusée1 est arrivé à Mars en partant de Terre en utilisant 20 carburant
+ * 
+ * Seul les éléments présenté si dessus sont liés à des intéractions utilisateur.
+ * Tout autre fonctionnalité, comme le plan de vol, l'affrétement, ... est directement créer dans le point d'entré de votre programme.
+ * 
+ * @author antoine.cronier
+ *
+ */
 public class Application {
 
 	public static void main(String[] args){
@@ -30,7 +71,7 @@ public class Application {
 				, 1000, null,100));
 
 		// Spaceship 1
-		Spaceship spaceship1 = new Spaceship("Fus�e1", spaceship1Cosmonaut, spaceship1Compartment, 0, 10000,50000);
+		Spaceship spaceship1 = new Spaceship("Fus�e1", spaceship1Cosmonaut, spaceship1Compartment, 0, 10000,50000);
 
 		// Planets
 		Planet earth = new Planet("Terre", new Coordinate(0, 12, -20));
@@ -65,7 +106,7 @@ public class Application {
 
 		gears = new ArrayList<Gear>();
 		for (int i = 0; i < 100; i++) {
-			gears.add(new Food("Ma�s",20,true,20));
+			gears.add(new Food("Ma�s",20,true,20));
 		}
 		for (int i = 0; i < 20; i++) {
 			gears.add(new Food("Choux de bruxel",20,false,20));
@@ -86,15 +127,15 @@ public class Application {
 
 
 		// Travel by steps for spaceship1
-		System.out.println("\n\n\n-------------\nVoyage 1 �tape 1\n-------------\n");
+		System.out.println("\n\n\n-------------\nVoyage 1 �tape 1\n-------------\n");
 		spaceship1Travel.travelToNextPlanet();
-		System.out.println("\n\n\n-------------\nVoyage 1 �tape 2\n-------------\n");
+		System.out.println("\n\n\n-------------\nVoyage 1 �tape 2\n-------------\n");
 		spaceship1Travel.unload(spaceship1Compartment.get(2));
-		System.out.println("\n\n\n-------------\nVoyage 1 �tape 3\n-------------\n");
+		System.out.println("\n\n\n-------------\nVoyage 1 �tape 3\n-------------\n");
 		spaceship1Travel.reFuel();
-		System.out.println("\n\n\n-------------\nVoyage 1 �tape 4\n-------------\n");
+		System.out.println("\n\n\n-------------\nVoyage 1 �tape 4\n-------------\n");
 		spaceship1Travel.travelToNextPlanet();
-		System.out.println("\n\n\n-------------\nVoyage 1 �tape 5?\n-------------\n");
+		System.out.println("\n\n\n-------------\nVoyage 1 �tape 5?\n-------------\n");
 		spaceship1Travel.travelToNextPlanet();
 
 		// Spaceship 1 Cosmonaut
@@ -107,7 +148,7 @@ public class Application {
 		List<Compartment> spaceship2Compartment = new ArrayList<Compartment>();
 
 		// Spaceship 2
-		Spaceship spaceship2 = new Spaceship("Fus�e2", spaceship2Cosmonaut, spaceship2Compartment, 0, 10000,120);
+		Spaceship spaceship2 = new Spaceship("Fus�e2", spaceship2Cosmonaut, spaceship2Compartment, 0, 10000,120);
 
 		// Space travel
 		SpaceTravel spaceship2Travel = new SpaceTravel(spaceship2,
@@ -118,7 +159,7 @@ public class Application {
 				add(earth);
 			}});
 		// Travel without steps for spaceship2
-		System.out.println("\n\n\n-------------\nVoyage 2 �tapes\n-------------\n");
+		System.out.println("\n\n\n-------------\nVoyage 2 �tapes\n-------------\n");
 		spaceship2Travel.reFuel();
 		spaceship2Travel.travelWithoutSteps();
 	}

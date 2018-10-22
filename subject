@@ -1,0 +1,41 @@
+/**
+ * Créer un programme qui permet de faire voyager un vaisseau spacial de planète en planète suivant un itinéraire de vol.
+ * Le vaisseau possèdera des compartiments de stockage ne pouvant embarquer qu'un certain poids de marchandise et un seul type de marchandise.
+ * Afin d'affréter un compartiment on renseignera la liste des marchandises et le compartiment dans lequel on veut insérer les marchandises.
+ * Lorsque l'on affréte un compartiement on le rempli jusqu'à ne plus pouvoir y ajouter de marchandise en terme de poids.
+ * Un planète possèdera un nom et des coordonnées.
+ * Une coordonnées sera représenté par X, Y et Z
+ * Naviguer entre deux planètes se fera en consommant du carburant selon la formule suivante :
+ * 		((sqrt((Xa-Xb)²+(Ya-Yb)²+(Za-Zb)²)/100) * (poidsFusée / 100))
+ * 
+ * Une marchandise, un compartiment et les cosmonautes qui pilote la fusée possède tous un poids. 
+ * 
+ * Votre programme permettra à l'utilisateur par l'intermédiaire d'un menu de :
+ * 	- connaitre les informations de la planète courante ou il se situe
+ * 	- naviguer vers une nouvelle planète
+ * 
+ * => exemples :
+ * 		-----------------------Bienvenu sur la planet-----------------------
+ *
+ *		Planet [name=Terre, coordinate=Coordinate [X=0.0, Y=12.0, Z=-20.0]]
+ * 
+ * 		1 : Données de navigation
+ *		2 : Naviguer vers la planète
+ *
+ * => si l'utilisateur saisi 1 on affichera :
+ * 
+ * 		La planète Planet [name=Terre, coordinate=Coordinate [X=0.0, Y=12.0, Z=-20.0]] est à 0 unité de carburant de la plan�te actuelle Planet [name=Terre, coordinate=Coordinate [X=0.0, Y=12.0, Z=-20.0]]
+ *		Actuellement le vaisseau a 10000 unité de carburant
+ *
+ *		Entrer pour continuer...
+ *
+ * => si l'utilisateur saisi 2 on affichera :
+ * 
+ * 		Le vaisseau spacial Fusée1 est arrivé à Mars en partant de Terre en utilisant 20 carburant
+ * 
+ * Seul les éléments présenté si dessus sont liés à des intéractions utilisateur.
+ * Tout autre fonctionnalité, comme le plan de vol, l'affrétement, ... est directement créer dans le point d'entré de votre programme.
+ * 
+ * @author antoine.cronier
+ *
+ */

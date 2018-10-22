@@ -3,7 +3,7 @@ package com.tactfactory.spacetravel.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Spaceship {
+public class Spaceship implements Weightable {
 
 	private String name;
 	private List<Cosmonaut> cosmonauts = new ArrayList<Cosmonaut>();
@@ -87,6 +87,20 @@ public class Spaceship {
 	 */
 	public void setMaxWeight(int maxWeight) {
 		this.maxWeight = maxWeight;
+	}
+
+	@Override
+	public int getWeight() {
+		int result = 0;
+		List<Weightable> weightables = new ArrayList<Weightable>();
+		weightables.addAll(this.getCosmonauts());
+		weightables.addAll(this.getCompartments());
+
+		for (Weightable weightable : weightables) {
+			result += weightable.getWeight();
+		}
+		
+		return result;
 	}
 
 	public Spaceship() {

@@ -12,22 +12,22 @@ import com.tactfactory.spacetravel.util.PlanetUtil;
 
 public class SpaceTravel {
 
-	private static final String READY_TRAVEL = "La fusée %s est prète avec à son bord les cosmonautes %s pour la série de voyage %s";
-	private static final String GEAR_NOT_ADDED = "L'équipement %s ne peut pas être embarqué dans le compartiment %s";
-	private static final String GEAR_ADD = "L'équipement %s a été embarqué dans la soute %s";
-	private static final String WRONG_COMPARTMENT = " car il ne respect pas les critères de la soute %s";
+	private static final String READY_TRAVEL = "La fusï¿½e %s est prï¿½te avec ï¿½ son bord les cosmonautes %s pour la sï¿½rie de voyage %s";
+	private static final String GEAR_NOT_ADDED = "L'ï¿½quipement %s ne peut pas ï¿½tre embarquï¿½ dans le compartiment %s";
+	private static final String GEAR_ADD = "L'ï¿½quipement %s a ï¿½tï¿½ embarquï¿½ dans la soute %s";
+	private static final String WRONG_COMPARTMENT = " car il ne respect pas les critï¿½res de la soute %s";
 	private static final String REFUEL = "Rechargement du carburant";
 	private static final String REFUEL_MAX = REFUEL + " au maximum %s";
-	private static final String REFUEL_VALUE = REFUEL + " à %s";
-	private static final String REFUEL_FINISH = "Le nouveau niveau de carburant est à %s soit %s %";
-	private static final String REFUEL_MORE = "%s n'ont pas été utilisé";
-	private static final String NAVIGATION_STEP = "Le vaisseau spacial %s est arrivé à %s en partant de %s en utilisant %s carburant";
-	private static final String NAVIGATION_FAILED = "Le vaisseau n'est pas arrivé à destination il est perdu dans l'espace";
+	private static final String REFUEL_VALUE = REFUEL + " ï¿½ %s";
+	private static final String REFUEL_FINISH = "Le nouveau niveau de carburant est ï¿½ %s soit %s %";
+	private static final String REFUEL_MORE = "%s n'ont pas ï¿½tï¿½ utilisï¿½";
+	private static final String NAVIGATION_STEP = "Le vaisseau spacial %s est arrivï¿½ ï¿½ %s en partant de %s en utilisant %s carburant";
+	private static final String NAVIGATION_FAILED = "Le vaisseau n'est pas arrivï¿½ ï¿½ destination il est perdu dans l'espace";
 	private static final String NAVIGATION_STOP = "Le vaisseau a fini son trajet";
-	private static final String UNLOAD_GEAR = "Déchargement de %s";
-	private static final String UNLOAD_GEAR_FAILED = "Impossible de décharger %s car non présent";
-	private static final String SPACESHIP_OVERWEIGHT = "Impossible de déplacer le vaisseau car il est surchargé";
-	private static final String COMPARTMENT_OVERWEIGHT = "Compartiment surchargé";
+	private static final String UNLOAD_GEAR = "Dï¿½chargement de %s";
+	private static final String UNLOAD_GEAR_FAILED = "Impossible de dï¿½charger %s car non prï¿½sent";
+	private static final String SPACESHIP_OVERWEIGHT = "Impossible de dï¿½placer le vaisseau car il est surchargï¿½";
+	private static final String COMPARTMENT_OVERWEIGHT = "Compartiment surchargï¿½";
 
 	private Spaceship spaceship;
 	private List<Planet> travelSteps;
@@ -100,7 +100,7 @@ public class SpaceTravel {
 	private Boolean checkWeight() {
 		Boolean result = false;
 
-		if (this.spaceship.getMaxWeight() > this.getSpaceShipRealWeight()) {
+		if (this.spaceship.getMaxWeight() > this.getSpaceship().getWeight()) {
 			result = true;
 		}else {
 			this.canContinue = false;
@@ -111,27 +111,12 @@ public class SpaceTravel {
 	}
 
 	/**
-	 * Fuel is not checked.
-	 * @return
-	 */
-	public int getSpaceShipRealWeight(){
-		int result = 0;
-		List<Weightable> weightables = new ArrayList<Weightable>();
-		weightables.addAll(this.spaceship.getCosmonauts());
-		weightables.addAll(this.spaceship.getCompartments());
-
-		for (Weightable weightable : weightables) {
-			result += weightable.getWeight();
-		}
-		return result;
-	}
-
-	/**
 	 * @param necessaryFuel
 	 */
 	private Boolean checkFuel() {
 		Boolean result = false;
 		int necessaryFuel = PlanetUtil.fuelForDistance(travelSteps.get(stepIndex), travelSteps.get(stepIndex+1));
+		necessaryFuel = necessaryFuel * this.getSpaceship().getWeight() / 100;
 		this.spaceship.setFuel(this.spaceship.getFuel()-necessaryFuel);
 		if (this.spaceship.getFuel() > 0) {
 			System.out.println(String.format(NAVIGATION_STEP,this.spaceship.getName(),travelSteps.get(stepIndex+1).getName(), travelSteps.get(stepIndex).getName(), String.valueOf(necessaryFuel)));

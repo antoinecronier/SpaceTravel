@@ -1,6 +1,6 @@
 package com.tactfactory.spacetravel.entity;
 
-public abstract class Gear {
+public abstract class Gear implements Weightable {
 
 	private String name;
 	private int weight;
